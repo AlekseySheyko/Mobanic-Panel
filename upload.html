@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
   </head>
 
   <body>
@@ -25,7 +27,7 @@
 
     <div class="container">
       <!-- TODO: Set input type "number" where appropriate, and limit length for some fields -->
-  	  <form>
+  	  <form onsubmit="return saveCar();">
 	    <h1>Upload new car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
@@ -33,24 +35,28 @@
 		</div>
 		<div class="form-group">
 		  <label for="inputModel">Model</label>
-		  <input class="form-control input-lg" id="inputModel" placeholder="Model" required>
+		  <input class="form-control input-lg" id="inputModel" placeholder="Car model" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputYear">Year</label>
 		  <input class="form-control input-lg" id="inputYear" placeholder="Model year" required>
+		</div>
+		<div class="form-group">
+		  <label for="inputPrice">Price</label>
+		  <input class="form-control input-lg" id="inputPrice" placeholder="Price" required>
 		</div><br><br>
 
 		<!-- TODO: Remove counded corners from fields stack  -->
 		<div class="form-group">
 			<label for="inputMileage">Specs</label>
-			<input class="form-control" id="inputMileage" placeholder="Mileage, km" required>
-	        <input class="form-control" id="inputPreviousOwners" placeholder="Previous owners" required>
-	        <input class="form-control" id="inputEngine" placeholder="Engine, cc" required>
+			<input class="form-control" id="inputMileage" placeholder="Mileage, km">
+	        <input class="form-control" id="inputPreviousOwners" placeholder="Previous owners">
+	        <input class="form-control" id="inputEngine" placeholder="Engine, cc">
 	        <!-- TODO: Replace below fields with dropdowns -->
-	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" required>
-	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" required>
-	        <input class="form-control" id="inputColor" placeholder="Color" required>
-	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" required>
+	        <input class="form-control" id="inputTransmission" placeholder="Transmission type">
+	        <input class="form-control" id="inputFuelType" placeholder="Fuel type">
+	        <input class="form-control" id="inputColor" placeholder="Color">
+	        <input class="form-control" id="inputLocation" placeholder="Location (country code)">
         </div><br><br>
 
 		<div class="form-group">
@@ -68,6 +74,34 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+
+	    function saveCar() {
+			var make = document.getElementById("inputMake").value;
+			var model = document.getElementById("inputModel").value;
+			var year = document.getElementById("inputYear").value;
+		    
+			var CarObject = Parse.Object.extend("Car");
+		    var carObject = new CarObject();
+
+		    carObject.set("make", make);
+		    carObject.set("model", model);
+		    carObject.set("year", year);
+
+		    carObject.save(null, {
+			  success: function(carObject) {
+			    // Execute any logic that should take place after the object is saved.
+			    alert('New object created with objectId: ' + carObject.id);
+			  },
+			  error: function(carObject, error) {
+			    // Execute any logic that should take place if the save fails.
+			    // error is a Parse.Error with an error code and message.
+			    alert('Failed to create new object, with error code: ' + error.message);
+			  }
+			});
+		}
+	</script>
     </div>
   </body>
 </html>
