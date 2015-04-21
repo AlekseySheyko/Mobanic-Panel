@@ -28,33 +28,37 @@
   	  <form>
 	    <h1>Upload new car</h1><br>
 		<div class="form-group">
-		  <label for="inputMake">Make</label>
-		  <input class="form-control" id="inputMake" placeholder="For example, “Toyota” or “BMW”" required autofocus>
+		  <label for="inputMake label-large">Make</label>
+		  <input class="form-control input-lg" id="inputMake" placeholder="Car make" required autofocus>
 		</div>
 		<div class="form-group">
 		  <label for="inputModel">Model</label>
-		  <input class="form-control" id="inputModel" placeholder="Enter car model" required>
+		  <input class="form-control input-lg" id="inputModel" placeholder="Model" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputYear">Year</label>
-		  <input class="form-control" id="inputYear" placeholder="Model year" required>
-		</div><br>
+		  <input class="form-control input-lg" id="inputYear" placeholder="Model year" required>
+		</div><br><br>
 
+		<!-- TODO: Remove counded corners from fields stack  -->
 		<div class="form-group">
 			<label for="inputMileage">Specs</label>
 			<input class="form-control" id="inputMileage" placeholder="Mileage, km" required>
 	        <input class="form-control" id="inputPreviousOwners" placeholder="Previous owners" required>
 	        <input class="form-control" id="inputEngine" placeholder="Engine, cc" required>
-	        <!-- TODO: Replace with dropdown -->
+	        <!-- TODO: Replace below fields with dropdowns -->
 	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" required>
-        </div><br>
+	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" required>
+	        <input class="form-control" id="inputColor" placeholder="Color" required>
+	        <input class="form-control" id="inputLocation" placeholder="Location (country)" required>
+        </div><br><br>
 
 		<div class="form-group">
 		  <label for="exampleInputFile">Cover image</label>
 		  <input type="file" id="exampleInputFile">
 		  <p class="help-block">Will be shown in main car listing.</p>
 		</div><br>
-		<button type="submit" class="btn btn-default">Save</button>
+		<button type="submit" class="btn btn-lg btn-success">Save</button>
 	  </form>
 	</div><br><br><br>
 
