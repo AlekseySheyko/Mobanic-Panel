@@ -151,17 +151,27 @@
 
 
 			fileUploadControl = $("#galleryImgs")[0];
-		    alert("Size: " + fileUploadControl.files.length);
-		    for (var i = 0; i < fileUploadControl.files.length; i++) {								
-				file = fileUploadControl.files[i];
-				name = "galleryImage" + (i+1) + ".png";
-							  		
-				parseFile = new Parse.File(name, file);
-				parseFile.save().then(function() {
-				    }, function(error) {
-				    });
-				carObject.set("galleryImage", parseFile);
-				carObject.save();
+			if (fileUploadControl.files.length > 0) {
+				var GalleryImage;
+				var galleryImage;
+				for (var i = 0; i < fileUploadControl.files.length; i++) {	
+					GalleryImage = Parse.Object.extend("GalleryImages");
+					galleryImage = new GalleryImage();
+					galleryImage.save();
+
+					file = fileUploadControl.files[i];
+					name = "galleryImage" + (i+1) + ".png";
+					
+					parseFile = new Parse.File(name, file);
+
+
+					parseFile.save().then(function() {
+					    }, function(error) {
+					    });
+					    galleryImage.set("image", parseFile);
+					    galleryImage.save();
+				    }
+				}
 			}
 
 
