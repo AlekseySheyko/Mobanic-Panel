@@ -28,7 +28,7 @@ p {
   font-size: 18px;
 }
 .table-hover > tbody > tr:hover {
-  background-color: #6f8470;
+  background-color: #5a5959;
 }
 .table a {
   color: #fff;
