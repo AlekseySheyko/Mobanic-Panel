@@ -157,16 +157,16 @@
 			    var name = "galleryImage" + (i+1) + ".png";
 
 			    var parseFile = new Parse.File(name, file);
-		    	
-		    	parseFile.save();
-		    	galleryImage.set("image", parseFile);
-		    	galleryImage.save().then(function() {
-		    		relation = carObject.relation("galleryImage");
+
+			    parseFile.save(null, {
+				  success: function(parseFile) {
+				    relation = carObject.relation("galleryImage");
 			    	relation.add(galleryImage);
 			    	carObject.save();
-			    	alert();
-			    }, function(error) {
-			    });		    	
+				  },
+				  error: function(parseFile, error) {
+				  }
+				});	
 			}
 
 
