@@ -141,14 +141,12 @@
 		    var parseFile = new Parse.File(name, file);
 
 
-		    parseFile.save().then(function() {
-			    }, function(error) {
-			    });
-			    carObject.set("coverImage", parseFile);
+		    parseFile.save();
+		    carObject.set("coverImage", parseFile);		
 		    
 
 			fileUploadControl = $("#galleryImgs")[0];
-			var relation
+			var relation = carObject.relation("galleryImage")
 			for (var i = 0; i < fileUploadControl.files.length; i++) {
 				var GalleryImage = Parse.Object.extend("GalleryImages");
 		    	var galleryImage = new GalleryImage();
@@ -156,17 +154,17 @@
 		    	var file = fileUploadControl.files[0];
 			    var name = "galleryImage" + (i+1) + ".png";
 
-			    var parseFile = new Parse.File(name, file);
+			    parseFile = new Parse.File(name, file);
+			    parseFile.save();
 
-			    parseFile.save(null, {
-				  success: function(parseFile) {
-				    relation = carObject.relation("galleryImage");
+			    galleryImage.set("image", parseFile);
+			    galleryImage.save(null, {
+				  success: function(gameScore) {
 			    	relation.add(galleryImage);
-			    	carObject.save();
 				  },
-				  error: function(parseFile, error) {
+				  error: function(gameScore, error) {
 				  }
-				});	
+				});
 			}
 
 
