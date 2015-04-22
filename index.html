@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
   </head>
 
   <body>
@@ -23,18 +25,20 @@
         <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
       </div>
 
-      <div  class="jumbotron" style="text-align: center">
-        <h1>Manage cars list</h1><br>
-        <p class="lead">Enter admin password to continue</p>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-            <input type="password" id="inputPassword" class="form-control input-lg" placeholder="Password" required autofocus>
+      <div class="jumbotron" style="text-align: center">
+        
+        <form onsubmit="return login();">
+          <h1>Manage cars list</h1><br>
+          <p class="lead">Enter admin password to continue</p>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <input type="password" id="inputPassword" class="form-control input-lg" placeholder="Password" required autofocus>
+            </div>
           </div>
-        </div>
-        <br><br>
-        <div class="row">
-        <p><a class="btn btn-lg btn-success" href="upload.html" role="button">Sign in</a></p>
-        </div>
+          <br><br>
+          <button type="submit" class="btn btn-lg btn-success">Sign in</button>
+        </form>
+
       </div>
 
       <footer class="footer">
@@ -42,6 +46,24 @@
       </footer>
       </div>
 
-    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script type="text/javascript">
+          Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+          
+          function login() {
+            event.preventDefault();
+            var password = document.getElementById("inputPassword").value;
+
+            Parse.User.logIn("admin", password, {
+              success: function(user) {
+                alert("Do stuff after successful login");
+              },
+              error: function(user, error) {
+                alert("The login failed. Error: " + error.code);
+              }
+            });
+
+          }
+      </script>
   </body>
 </html>

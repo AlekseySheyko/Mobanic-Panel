@@ -71,13 +71,15 @@
       <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
     </footer>
     </div>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
 
 	 	function saveCar() {
+			event.preventDefault();
+
 			var make = document.getElementById("inputMake").value;
 			var model = document.getElementById("inputModel").value;
 			var year = parseInt(document.getElementById("inputYear").value);
@@ -101,6 +103,5 @@
 			});
 		}
 	</script>
-    </div>
   </body>
 </html>
