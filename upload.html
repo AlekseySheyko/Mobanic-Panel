@@ -141,28 +141,30 @@
 
 		    var parseFile = new Parse.File(name, file);
 
+
 		    parseFile.save().then(function() {
 			    }, function(error) {
 			    });
 			    carObject.set("coverImage", parseFile);
-			    carObject.save(null, {
-				  success: function(gameScore) {
-				    
-				  	fileUploadControl = $("#galleryImgs")[0];
-				  	for (var i = 0; i < fileUploadControl.files.length; i++) {
-				  		file = fileUploadControl.files[i];
-		    			name = "galleryImage" + (i+1) + ".png";
-				  		
-				  		parseFile = new Parse.File(name, file);
-				  		parseFile.save();
-				  	}
-
-				  },
-				  error: function(gameScore, error) {
-				    alert("The save failed.");
-				  }
-				});
+			    carObject.save();
 		    }
+
+
+			fileUploadControl = $("#galleryImgs")[0];
+		    alert("Size: " + fileUploadControl.files.length);
+		    for (var i = 0; i < fileUploadControl.files.length; i++) {								
+				file = fileUploadControl.files[i];
+				name = "galleryImage" + (i+1) + ".png";
+							  		
+				parseFile = new Parse.File(name, file);
+				parseFile.save().then(function() {
+				    }, function(error) {
+				    });
+				carObject.set("galleryImage", parseFile);
+				carObject.save();
+			}
+
+
 		}
 	</script>
   </body>
