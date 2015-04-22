@@ -22,28 +22,29 @@
             <li role="presentation"><a href="http://mobanic.com">Home</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Mobanic</h3>
+        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
+      
       </div>
 
-    <div class="container">
+    <div class="jumbotron">
       <!-- TODO: Set input type "number" where appropriate, and limit length for some fields -->
   	  <form onsubmit="return saveCar();">
-	    <h1>Upload new car</h1><br>
+	    <h1 style="font-size: 40px">Upload new car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
-		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" value="Toyota" required autofocus>
+		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" required autofocus>
 		</div>
 		<div class="form-group">
 		  <label for="inputModel">Model</label>
-		  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" value="Supra" required>
+		  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputYear">Year</label>
-		  <input type="number" class="form-control input-lg" id="inputYear" placeholder="Model year" value="2008" required>
+		  <input type="number" class="form-control input-lg" id="inputYear" placeholder="Model year" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputPrice">Price</label>
-		  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price" value="30000" required>
+		  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price, £" required>
 		</div><br><br>
 
 		<div class="form-group">
@@ -64,11 +65,12 @@
 		</div><br>
 		<button type="submit" class="btn btn-lg btn-success">Save</button>
 	  </form>
-	</div><br><br><br><br>
+	</div><br><br><br>
 
 	<footer class="footer">
       <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
     </footer>
+    </div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
