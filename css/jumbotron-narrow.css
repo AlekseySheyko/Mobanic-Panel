@@ -10,6 +10,31 @@ p {
   color: #cccccc;
 }
 
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 20px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #706f6f;
+  font-size: 18px;
+}
+.table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #888888;
+  font-size: 18px;
+}
+.table-hover > tbody > tr:hover {
+  background-color: #6f8470;
+}
+.table a {
+  color: #fff;
+  font-size: 20px;
+}
+
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {

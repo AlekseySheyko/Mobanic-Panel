@@ -40,7 +40,7 @@
 		  <div class="col-md-8"><h1 style="font-size: 40px">Manage car listing</h1></div>
 		  <div class="col-md-4"><a class="btn btn-success" href="upload.html" role="button">Upload new</a></div>
 		</div>
-		<br>
+		<br><br>
     	<div class="table-responsive" id="tablePrint"></div>
 		
     </div><br>
@@ -70,7 +70,7 @@
 			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='#' title='Edit'>" + 
 			      				object.get('model') + "</td><td>" + 
 			      				+ date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>" + 
-			      				"<a href='#' title='Mark as sold'><span class='glyphicon glyphicon-eye-close'></span></a>" + "<a href='#' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
+			      				"<a href='#' title='Mark as sold'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>" + "<a href='#' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
 			      // alert(object.id + ' - ' + object.get('make'));
 			    }
 			    myTable+= "</tbody></table>";
