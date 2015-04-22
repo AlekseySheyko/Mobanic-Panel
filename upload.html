@@ -135,7 +135,6 @@
 		    }
 
 		    var fileUploadControl = $("#coverImg")[0];
-		    if (fileUploadControl.files.length > 0) {
 		    var file = fileUploadControl.files[0];
 		    var name = "coverImage.png";
 
@@ -146,34 +145,24 @@
 			    }, function(error) {
 			    });
 			    carObject.set("coverImage", parseFile);
-			    carObject.save();
-		    }
-
+		    
 
 			fileUploadControl = $("#galleryImgs")[0];
 			if (fileUploadControl.files.length > 0) {
-				var GalleryImage;
-				var galleryImage;
-				for (var i = 0; i < fileUploadControl.files.length; i++) {	
-					GalleryImage = Parse.Object.extend("GalleryImages");
-					galleryImage = new GalleryImage();
-					galleryImage.save();
+				file = fileUploadControl.files[0];
+			    name = "galleryImage.png";
 
-					file = fileUploadControl.files[i];
-					name = "galleryImage" + (i+1) + ".png";
-					
-					parseFile = new Parse.File(name, file);
+			    parseFile = new Parse.File(name, file);
 
 
-					parseFile.save().then(function() {
-					    }, function(error) {
-					    });
-					    galleryImage.set("image", parseFile);
-					    galleryImage.save();
-				    }
-				}
+			    parseFile.save().then(function() {
+				    }, function(error) {
+				    });
+				    carObject.set("galleryImages", parseFile);
 			}
 
+
+			carObject.save();
 
 		}
 	</script>
