@@ -36,7 +36,7 @@
       </div>
 
     <div class="jumbotron">
-    	<form onsubmit="return saveCar();">
+    	<form onsubmit="return saveCar();" enctype="multipart/form-data">
 	    <h1 style="font-size: 40px">Upload new car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
@@ -68,8 +68,13 @@
 
 		<div class="form-group">
 		  <label for="exampleInputFile">Cover image</label>
-		  <input type="file" id="exampleInputFile">
+		  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg">
 		  <p class="help-block">Will be shown in main car listing.</p>
+		</div><br>
+		<div class="form-group">
+		  <label for="exampleInputFile">Gallery images</label>
+		  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
+		  <p class="help-block">Additional images to show in detail view.</p>
 		</div><br>
 		<button type="submit" class="btn btn-lg btn-success">Save</button>
 	  </form>
@@ -130,14 +135,32 @@
 		    	carObject.set("location", location);
 		    }
 
-		    carObject.save(null, {
-			  success: function(gameScore) {
-			    Alert("The object was saved successfully.");
-			  },
-			  error: function(gameScore, error) {
-			    Alert("The save failed.");
-			  }
-			});
+		    if (fileUploadControl.files.length > 0) {
+		    var file = fileUploadControl.files[0];
+		    var name = "coverImage.png";
+
+		    var parseFile = new Parse.File(name, file);
+
+		    //put this inside if {
+		    parseFile.save().then(function() {
+			    // The file has been saved to Parse.
+			    }, function(error) {
+			    // The file either could not be read, or could not be saved to Parse.
+			    });
+
+			    // Be sure of ur parameters name
+			    // prod is extend of my class in parse from this: var prod = new products();
+			    carObject.set("coverImage", parseFile);
+
+			    carObject.save(null, {
+				  success: function(gameScore) {
+				    Alert("The object was saved successfully.");
+				  },
+				  error: function(gameScore, error) {
+				    Alert("The save failed.");
+				  }
+				});
+		    }
 		}
 	</script>
   </body>
