@@ -15,7 +15,6 @@
 
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
-		    alert("User is null. Login again.");
 		    window.location.replace('index.html');
 		}
 
@@ -37,35 +36,34 @@
       </div>
 
     <div class="jumbotron">
-      <!-- TODO: Set input type "number" where appropriate, and limit length for some fields -->
-  	  <form onsubmit="return saveCar();">
+    	<form onsubmit="return saveCar();">
 	    <h1 style="font-size: 40px">Upload new car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
-		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" required autofocus>
+		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" value="Toyota" required autofocus>
 		</div>
 		<div class="form-group">
 		  <label for="inputModel">Model</label>
-		  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
+		  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" value="Land Cruiser" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputYear">Year</label>
-		  <input type="number" class="form-control input-lg" id="inputYear" placeholder="Model year" required>
+		  <input type="number" class="form-control input-lg" id="inputYear" placeholder="Model year" value="2011" required>
 		</div>
 		<div class="form-group">
 		  <label for="inputPrice">Price</label>
-		  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price, £" required>
+		  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price, £" value="80000" required>
 		</div><br><br>
 
 		<div class="form-group">
 			<label for="inputMileage">Specs</label>
-			<input class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-	        <input class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
-	        <input class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
-	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" style="border-radius: 0">
-	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" style="border-radius: 0">
-	        <input class="form-control" id="inputColor" placeholder="Color" style="border-radius: 0">
-	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+			<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" value="43500">
+	        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" value="2">
+	        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" value="4800">
+	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" style="border-radius: 0" value="Semi-Automatic">
+	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" style="border-radius: 0" value="Diesel">
+	        <input class="form-control" id="inputColor" placeholder="Color" style="border-radius: 0" value="Violet">
+	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;" value="UK">
         </div><br><br>
 
 		<div class="form-group">
@@ -93,14 +91,44 @@
 			var model = document.getElementById("inputModel").value;
 			var year = parseInt(document.getElementById("inputYear").value);
 			var price = parseInt(document.getElementById("inputPrice").value);
-		    
+
+			var mileage = parseInt(document.getElementById("inputMileage").value);
+			var previousOwners = parseInt(document.getElementById("inputPreviousOwners").value);
+			var engine = parseInt(document.getElementById("inputEngine").value);
+			var transmission = document.getElementById("inputTransmission").value;
+			var fuelType = document.getElementById("inputFuelType").value;
+			var color = document.getElementById("inputColor").value;
+			var location = document.getElementById("inputLocation").value;
+
 			var CarObject = Parse.Object.extend("Car");
 		    var carObject = new CarObject();
 
 		    carObject.set("make", make);
 		    carObject.set("model", model);
 		    carObject.set("year", year);
-		    carObject.set("price", price)
+		    carObject.set("price", price);
+		    carObject.set("isSold", false);
+		    if (document.getElementById("inputMileage").value) {
+		    	carObject.set("mileage", mileage);
+		    }
+		    if (document.getElementById("inputPreviousOwners").value) {
+		    	carObject.set("previousOwners", previousOwners);
+		    }
+		    if (document.getElementById("inputEngine").value) {
+		    	carObject.set("engine", engine + "cc");
+		    }
+		    if (transmission) {
+		    	carObject.set("transmission", transmission);
+		    }
+		    if (fuelType) {
+		    	carObject.set("fuelType", fuelType);
+		    }
+		    if (color) {
+		    	carObject.set("color", color);
+		    }
+		    if (location) {
+		    	carObject.set("location", location);
+		    }
 
 		    carObject.save(null, {
 			  success: function(gameScore) {
