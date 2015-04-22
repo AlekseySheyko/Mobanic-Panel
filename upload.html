@@ -68,7 +68,7 @@
 
 		<div class="form-group">
 		  <label for="exampleInputFile">Cover image</label>
-		  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg">
+		  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg" required>
 		  <p class="help-block">Will be shown in main car listing.</p>
 		</div><br>
 		<div class="form-group">
@@ -151,7 +151,7 @@
 				  	fileUploadControl = $("#galleryImgs")[0];
 				  	for (var i = 0; i < fileUploadControl.files.length; i++) {
 				  		file = fileUploadControl.files[i];
-		    			name = "coverImage" + i + ".png";
+		    			name = "galleryImage" + (i+1) + ".png";
 				  		
 				  		parseFile = new Parse.File(name, file);
 				  		parseFile.save();
