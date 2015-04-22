@@ -43,12 +43,19 @@
 		<br>
     	<div class="table-responsive" id="tablePrint"></div>
 		
-    </div>
+    </div><br>
+
+      <footer class="footer">
+        <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
+      </footer>
+
+      </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		var CarObject = Parse.Object.extend("Car");
 		var query = new Parse.Query(CarObject);
+		query.descending("createdAt");
 		query.find({
 		  success: function(results) {
 		  		var myTable= "<table class=\"table table-hover\"><thead><tr><th>#</th><th>Model</th><th>Date</th><th>Actions</th></tr></thead><tbody>";
@@ -60,9 +67,10 @@
 		  		for (var i = 0; i < results.length; i++) {
 			      var object = results[i];
 			      var date = object.createdAt;
-			      myTable+= "<tr><td>" + (i+1) + "</td><td>" + 
+			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='#' title='Edit'>" + 
 			      				object.get('model') + "</td><td>" + 
-			      				+ date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>nec</td></tr>";
+			      				+ date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>" + 
+			      				"<a href='#' title='Mark as sold'><span class='glyphicon glyphicon-eye-close'></span></a>" + "<a href='#' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
 			      // alert(object.id + ' - ' + object.get('make'));
 			    }
 			    myTable+= "</tbody></table>";
