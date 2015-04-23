@@ -70,7 +70,7 @@
 			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='edit.html?carId=" + object.id + "' title='Edit'>" + 
 			      				object.get('model') + "</td><td>" + 
 			      				+ date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>" + 
-			      				"<a href='#' title='Mark as sold'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>" + "<a href='delete.html?carId=" + object.id + "' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
+			      				"<a href='markSold.html?carId=" + object.id + "&sold=" + !object.get('isSold') + "' title='Mark as sold'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>" + "<a href='delete.html?carId=" + object.id + "' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
 			    }
 			    myTable+= "</tbody></table>";
 			    document.getElementById('tablePrint').innerHTML = myTable;

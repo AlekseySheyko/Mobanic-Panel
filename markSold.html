@@ -21,16 +21,17 @@
 		    window.location.replace('index.html');
 		}
 
-		var carId = location.search.split('carId=')[1];
+		var carId = getParameterByName('carId');
+		var isSold = getParameterByName('sold');
+		alert("Sold = " + isSold);
 
 		var CarObject = Parse.Object.extend("Car");
 		var query = new Parse.Query(CarObject);
 		query.get(carId, {
 		  success: function(carObject) {
 
-		  	if (confirm('Are you sure you want to delete this car?')) {
-			    carObject.destroy();
-			}
+		  	carObject.set('isSold', isSold);
+		  	carObject.save();
 			window.location.replace('manage.html');
 
 		  },
@@ -39,6 +40,13 @@
 		    window.location.replace('manage.html');
 		  }
 		});
+
+		function getParameterByName(name) {
+		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		        results = regex.exec(location.search);
+		    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
 
   	</script>
 
