@@ -23,20 +23,26 @@
 
 		var carId = getParameterByName('carId');
 		var isSold = getParameterByName('sold');
-		alert("Sold = " + isSold);
 
 		var CarObject = Parse.Object.extend("Car");
 		var query = new Parse.Query(CarObject);
 		query.get(carId, {
 		  success: function(carObject) {
 
-		  	carObject.set('isSold', isSold);
-		  	carObject.save();
-			window.location.replace('manage.html');
+		  	carObject.set('isSold', JSON.parse(isSold));
+		  	carObject.save(null, {
+			  success: function(carObject) {
+			    window.location.replace('manage.html');
+			  },
+			  error: function(carObject, error) {
+			  	alert("Not saved. Cause: " + error.message);
+			  }
+			});
+
 
 		  },
 		  error: function(carObject, error) {
-		    alert("Car not found");
+		    alert("Car not found. Cause: " + error.message);
 		    window.location.replace('manage.html');
 		  }
 		});
