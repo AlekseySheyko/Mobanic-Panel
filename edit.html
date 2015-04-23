@@ -18,6 +18,35 @@
 		    window.location.replace('index.html');
 		}
 
+		var carId = location.search.split('carId=')[1];
+
+		var CarObject = Parse.Object.extend("Car");
+		var query = new Parse.Query(CarObject);
+		query.get(carId, {
+		  success: function(carObject) {
+		    
+		    document.getElementById("inputMake").value = carObject.get('make');
+		    document.getElementById("inputModel").value = carObject.get('model');
+		    document.getElementById("inputYear").value = carObject.get('year');
+		    document.getElementById("inputPrice").value = carObject.get('price');
+
+		    document.getElementById("inputMileage").value = carObject.get('price');
+		    document.getElementById("inputPreviousOwners").value = carObject.get('previousOwners');
+		    var engine = carObject.get('engine');
+		    engine = engine.substring(0, engine.length - 2);
+		    document.getElementById("inputEngine").value = engine;
+		    document.getElementById("inputTransmission").value = carObject.get('transmission');
+		    document.getElementById("inputFuelType").value = carObject.get('fuelType');
+		    document.getElementById("inputColor").value = carObject.get('color');
+		    document.getElementById("inputLocation").value = carObject.get('location');
+
+		  },
+		  error: function(carObject, error) {
+		    alert("Car not found");
+		    window.location.replace('manage.html');
+		  }
+		});
+
   	</script>
   </head>
 
@@ -37,7 +66,7 @@
 
     <div class="jumbotron">
     	<form onsubmit="return saveCar();" enctype="multipart/form-data">
-	    <h1 style="font-size: 40px">Upload new car</h1><br>
+	    <h1 style="font-size: 40px">Edit car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
 		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" autofocus>
@@ -67,12 +96,12 @@
         </div><br><br>
 
 		<div class="form-group">
-		  <label for="exampleInputFile">Cover image</label>
+		  <label for="exampleInputFile">New cover image</label>
 		  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg" required>
-		  <p class="help-block">Will be shown in main car listing.</p>
+		  <p class="help-block">Leave empty if you don't want to change one.</p>
 		</div><br>
 		<div class="form-group">
-		  <label for="exampleInputFile">Gallery images</label>
+		  <label for="exampleInputFile">New gallery images</label>
 		  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
 		  <p class="help-block">Additional images to show in detail view.</p>
 		</div><br>

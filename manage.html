@@ -67,18 +67,17 @@
 		  		for (var i = 0; i < results.length; i++) {
 			      var object = results[i];
 			      var date = object.createdAt;
-			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='#' title='Edit'>" + 
+			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='edit.html?carId=" + object.id + "' title='Edit'>" + 
 			      				object.get('model') + "</td><td>" + 
 			      				+ date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>" + 
 			      				"<a href='#' title='Mark as sold'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>" + "<a href='#' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
-			      // alert(object.id + ' - ' + object.get('make'));
 			    }
 			    myTable+= "</tbody></table>";
-
 			    document.getElementById('tablePrint').innerHTML = myTable;
         	},
 		  error: function(error) {
-		    alert("Error: " + error.code + " " + error.message);
+			Parse.User.logOut();
+		    window.location.replace('index.html');
 		  }
 		});
 	</script>
