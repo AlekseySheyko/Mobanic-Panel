@@ -168,7 +168,15 @@
 			}
 
 
-			carObject.save();
+			carObject.save(null, {
+			  success: function(gameScore) {
+			    alert('Successfully uploaded');
+			    window.location.replace('manage.html');
+			  },
+			  error: function(gameScore, error) {
+			    alert('Failed to upload the car, cause: ' + error.message);
+			  }
+			});
 
 		}
 	</script>
