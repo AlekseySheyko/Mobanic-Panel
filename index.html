@@ -61,7 +61,7 @@
             event.preventDefault();
             var password = document.getElementById("inputPassword").value;
 
-            Parse.User.logIn("admin2", password, {
+            Parse.User.logIn("admin", password, {
               success: function(user) {
                 window.location.replace('manage.html');
               },
