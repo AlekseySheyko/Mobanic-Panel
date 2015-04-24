@@ -15,7 +15,7 @@
 
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
-		    window.location.replace('index.html');
+		    window.location.replace('manage.html');
 		}
 
   	</script>
@@ -36,7 +36,7 @@
       </div>
 
     <div class="jumbotron">
-    	<form onsubmit="return saveCar();" enctype="multipart/form-data">
+    	<form onsubmit="return saveCar(event);" enctype="multipart/form-data">
 	    <h1 style="font-size: 40px">Upload new car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
@@ -60,8 +60,20 @@
 			<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
 	        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
 	        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
-	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" style="border-radius: 0">
-	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" style="border-radius: 0">
+	        <select class="form-control" id="inputTransmission" style="border-radius: 0">
+	        	<option value="" disabled selected>Transmission type</option>
+	        	<option value="automatic">Automatic</option>
+	        	<option value="semi-automatic">Semi-Automatic</option>
+	        	<option value="manual">Manual</option>
+	        	<option value="continuously-variable">Continuously Variable</option>
+	        </select>
+	        <select class="form-control" id="inputFuelType" style="border-radius: 0">
+	        	<option value="" disabled selected>Fuel type</option>
+	        	<option value="petrol">Petrol</option>
+	        	<option value="diesel">Diesel</option>
+	        	<option value="autogas">Autogas</option>
+	        	<option value="hybrid">Hybrid</option>
+	        </select>
 	        <input class="form-control" id="inputColor" placeholder="Color" style="border-radius: 0">
 	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
         </div><br><br>
@@ -89,7 +101,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
-	 	function saveCar() {
+	 	function saveCar(event) {
 			event.preventDefault();
 
 			var make = document.getElementById("inputMake").value;

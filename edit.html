@@ -65,7 +65,7 @@
       </div>
 
     <div class="jumbotron">
-    	<form onsubmit="return saveCar();" enctype="multipart/form-data">
+    	<form onsubmit="return saveCar(event);" enctype="multipart/form-data">
 	    <h1 style="font-size: 40px">Edit car</h1><br>
 		<div class="form-group">
 		  <label for="inputMake label-large">Make</label>
@@ -118,7 +118,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
-	 	function saveCar() {
+	 	function saveCar(event) {
 			event.preventDefault();
 
 

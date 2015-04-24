@@ -36,7 +36,7 @@
 
       <div class="jumbotron" style="text-align: center">
         
-        <form onsubmit="return login();">
+        <form onsubmit="return login(event);">
           <h1>Dealer Portal</h1><br>
           <p class="lead">Enter admin password to continue</p>
           <div class="row">
@@ -57,7 +57,7 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script type="text/javascript">
-          function login() {
+          function login(event) {
             event.preventDefault();
             var password = document.getElementById("inputPassword").value;
 
