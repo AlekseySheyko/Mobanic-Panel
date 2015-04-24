@@ -89,6 +89,15 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
+		function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
 	 	function saveCar(event) {
 			event.preventDefault();
 
@@ -167,25 +176,11 @@
 				});
 			}
 
+			sendPush();
 
 			carObject.save(null, {
 			  success: function(gameScore) {
-
-			  	Parse.Push.send({
-				  where: new Parse.Query(Parse.Installation)
-				  data: {
-		          	alert: "Update car listing"
-		          }
-				}, {
-				  success: function() { 
-				  	alert("Push was sent");
-				  },
-				  error: function(error) { 
-				  	alert("Failed to save push. Cause: " + error.message);
-				  }
-				});
-
-
+			    alert('Successfully uploaded');
 			    window.location.replace('manage.html');
 			  },
 			  error: function(gameScore, error) {

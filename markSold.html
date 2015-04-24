@@ -16,6 +16,15 @@
   	<script type="text/javascript">
 	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
 
+	    function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
 		    window.location.replace('index.html');
@@ -39,7 +48,7 @@
 			  }
 			});
 
-
+		  	sendPush();
 		  },
 		  error: function(carObject, error) {
 		    alert("Car not found. Cause: " + error.message);

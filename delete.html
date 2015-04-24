@@ -16,6 +16,15 @@
   	<script type="text/javascript">
 	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
 
+	    function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
 		    window.location.replace('index.html');
@@ -26,19 +35,20 @@
 		var CarObject = Parse.Object.extend("Car");
 		var query = new Parse.Query(CarObject);
 		query.get(carId, {
-		  success: function(carObject) {
+		  success: function(carObject, event) {
 
 		  	if (confirm('Are you sure you want to delete this car?')) {
 			    carObject.destroy();
 			}
 			window.location.replace('manage.html');
-
 		  },
 		  error: function(carObject, error) {
 		    alert("Car not found");
 		    window.location.replace('manage.html');
 		  }
 		});
+
+		sendPush();
 
   	</script>
 
