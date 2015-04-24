@@ -60,20 +60,8 @@
 			<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
 	        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
 	        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
-	        <select class="form-control" id="inputTransmission" style="border-radius: 0">
-	        	<option value="" disabled selected>Transmission type</option>
-	        	<option value="automatic">Automatic</option>
-	        	<option value="semi-automatic">Semi-Automatic</option>
-	        	<option value="manual">Manual</option>
-	        	<option value="continuously-variable">Continuously Variable</option>
-	        </select>
-	        <select class="form-control" id="inputFuelType" style="border-radius: 0">
-	        	<option value="" disabled selected>Fuel type</option>
-	        	<option value="petrol">Petrol</option>
-	        	<option value="diesel">Diesel</option>
-	        	<option value="autogas">Autogas</option>
-	        	<option value="hybrid">Hybrid</option>
-	        </select>
+	        <input class="form-control" id="inputTransmission" placeholder="Transmission type" style="border-radius: 0">
+	        <input class="form-control" id="inputFuelType" placeholder="Fuel type" style="border-radius: 0">
 	        <input class="form-control" id="inputColor" placeholder="Color" style="border-radius: 0">
 	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
         </div><br><br>
@@ -182,7 +170,22 @@
 
 			carObject.save(null, {
 			  success: function(gameScore) {
-			    alert('Successfully uploaded');
+
+			  	Parse.Push.send({
+				  where: new Parse.Query(Parse.Installation)
+				  data: {
+		          	alert: "Update car listing"
+		          }
+				}, {
+				  success: function() { 
+				  	alert("Push was sent");
+				  },
+				  error: function(error) { 
+				  	alert("Failed to save push. Cause: " + error.message);
+				  }
+				});
+
+
 			    window.location.replace('manage.html');
 			  },
 			  error: function(gameScore, error) {

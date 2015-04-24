@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
-  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   	<script type="text/javascript">
 	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
 
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
-		    window.location.replace('index.html');
+		    window.location.replace('manage.html');
 		}
 
 		var carId = location.search.split('carId=')[1];
@@ -118,6 +118,15 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
+		function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
 	 	function saveCar(event) {
 			event.preventDefault();
 
@@ -202,10 +211,13 @@
 						});
 					}
 
+					sendPush();
+
 
 					carObject.save(null, {
 					  success: function(gameScore) {
 					    alert('Successfully updated');
+
 					    window.location.replace('manage.html');
 					  },
 					  error: function(gameScore, error) {
@@ -220,7 +232,7 @@
 			    window.location.replace('manage.html');
 			  }
 			});
-
+			event.preventDefault();
 		}
 	</script>
   </body>
