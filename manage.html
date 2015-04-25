@@ -24,35 +24,40 @@
   <body>
 
   	<div class="container">
+
   		<div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
-            <li role="presentation"><a href="http://mobanic.com">Home</a></li>
-          </ul>
-        </nav>
-        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
-      
-      </div>
+	        <nav>
+	          <ul class="nav nav-pills pull-right">
+	            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
+	            <li role="presentation"><a href="http://mobanic.com">Home</a></li>
+	          </ul>
+	        </nav>
+	        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
+	        <br><a href="#" onclick="logout();return false;" class="pull-right" style="margin-right: 80px; color: #555;">Log out</a>
+    	</div>
 
-    <div class="jumbotron">
-    	<div class="row">
-		  <div class="col-md-8"><h1 style="font-size: 40px">Manage car listing</h1></div>
-		  <div class="col-md-4"><a class="btn btn-success" href="upload.html" role="button" style="margin-top: 8px">Upload new</a></div>
-		</div>
-		<br><br>
-    	<div class="table-responsive" id="tablePrint"></div>
-		
-    </div><br>
+	    <div class="jumbotron">
+	    	<div class="row">
+			  <div class="col-md-8"><h1 style="font-size: 40px">Manage car listing</h1></div>
+			  <div class="col-md-4"><a class="btn btn-success" href="upload.html" role="button" style="margin-top: 8px">Upload new</a></div>
+			</div>
+			<br><br>
+	    	<div class="table-responsive" id="tablePrint"></div>			
+	    </div><br>
 
-      <footer class="footer">
-        <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
-      </footer>
+    	<footer class="footer">
+        	<p class="text-center">Copyright © 2015 Mobanic Ltd</p>
+      	</footer>
 
-      </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+		function logout() {
+			Parse.User.logOut();
+		    window.location.replace('index.html');
+		}
+
 		var CarObject = Parse.Object.extend("Car");
 		var query = new Parse.Query(CarObject);
 		query.descending("createdAt");
