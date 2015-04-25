@@ -48,7 +48,7 @@
 		      	} else {
 		      		counter = 1;
 		      		var newdiv = document.createElement('div');
-			          newdiv.innerHTML = "<input type='text' class='form-control'  style='border-radius: 0' " + "name='bar[]' placeholder='Feature #1'>";
+			          newdiv.innerHTML = "<input type='text' class='form-control' name='bar[]' placeholder='Feature #1' style='border-bottom-left-radius: 0; border-bottom-right-radius: 0;'>";
 			          document.getElementById("dynamicInput").appendChild(newdiv);
 		      	}
 		     }
@@ -106,7 +106,7 @@
 
 	    <div class="jumbotron">
 
-		    <form onsubmit="return saveCar(event);" enctype="multipart/form-data">
+		    <form id="foo" onsubmit="return saveCar(event);" enctype="multipart/form-data">
 		    <h1 style="font-size: 40px">Edit car</h1><br>
 			<div class="form-group">
 			  <label for="inputMake">Make</label>
@@ -282,11 +282,24 @@
 
 					var inputs = document.querySelectorAll("#foo input[name='bar[]']");
 						if (inputs != null) {
-						for (var i = 0; i < inputs.length; i++) {
+							for (var i = 0; i < inputs.length; i++) {
 							carObject.unset("features");
 						   	if (inputs[i].value != "") {
 						   		carObject.addUnique("features", inputs[i].value);
 						   	}
+						}
+					}
+
+				    var features = [];
+					var inputs = document.querySelectorAll("#foo input[name='bar[]']");
+					if (inputs != null) {
+						for (var i = 0; i < inputs.length; i++) {
+						   	if (inputs[i].value != "") {
+						   		features.push(inputs[i].value);
+						   	}
+						}
+						if (inputs[0].value != "") {
+						carObject.set("features", features);
 						}
 					}
 
