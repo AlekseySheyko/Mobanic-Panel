@@ -13,6 +13,9 @@
   	<script type="text/javascript">
 	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
 
+		var counter;
+		var limit = 10;
+
 	    var currentUser = Parse.User.current();
 		if (!currentUser) {
 		    window.location.replace('manage.html');
@@ -24,6 +27,31 @@
 		var query = new Parse.Query(CarObject);
 		query.get(carId, {
 		  success: function(carObject) {
+
+		  	var features = carObject.get('features');
+		  	if (features != null) {
+		  		counter = features.length;
+		  	} else {
+		  		counter = 0;		  		
+		  	}
+
+		  	if (counter == limit)  {
+		          alert("You have reached the limit of adding " + counter + " features");
+		     }
+		     else {
+		     	if (features != null && features.length > 0) {
+		     	  for (var i = 0; i < features.length; i++) {
+			          var newdiv = document.createElement('div');
+			          newdiv.innerHTML = "<input type='text' class='form-control'  style='border-radius: 0' " + "name='bar[]' placeholder='Feature #" + (i + 1) + "'" + " value='" + features[i] + "''>";
+			          document.getElementById("dynamicInput").appendChild(newdiv);
+		      	  }
+		      	} else {
+		      		counter = 1;
+		      		var newdiv = document.createElement('div');
+			          newdiv.innerHTML = "<input type='text' class='form-control'  style='border-radius: 0' " + "name='bar[]' placeholder='Feature #1'>";
+			          document.getElementById("dynamicInput").appendChild(newdiv);
+		      	}
+		     }
 		    
 		    document.getElementById("inputMake").value = carObject.get('make');
 		    document.getElementById("inputModel").value = carObject.get('model');
@@ -46,119 +74,144 @@
 		  }
 		});
 
+		function addInput(divName){
+
+		     if (counter == limit)  {
+		          alert("You have reached the limit of adding " + counter + " features");
+		     }
+		     else {
+		          var newdiv = document.createElement('div');
+		          newdiv.innerHTML = "<input type='text' class='form-control' style='border-radius: 0' name='bar[]' placeholder='Feature #" + (counter + 1) + "'>";
+		          document.getElementById(divName).appendChild(newdiv);
+		          counter++;
+		     }
+		}
+
   	</script>
   </head>
 
   <body>
-
   	<div class="container">
+
   		<div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
-            <li role="presentation"><a href="http://mobanic.com">Home</a></li>
-          </ul>
-        </nav>
-        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
-	    <br><a href="#" onclick="logout();return false;" class="pull-right" style="margin-right: 80px; color: #555;">Log out</a>
-      
-      </div>
+	        <nav>
+	          <ul class="nav nav-pills pull-right">
+	            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
+	            <li role="presentation"><a href="http://mobanic.com">Home</a></li>
+	          </ul>
+	        </nav>
+	        <a href="http://mobanic.com"><img src="img/header_logo.png"></img></a>
+	        <br><a href="#" onclick="logout();return false;" class="pull-right" style="margin-right: 80px; color: #555;">Log out</a>
+    	</div>
 
-    <div class="jumbotron">
-    	<form onsubmit="return saveCar(event);" enctype="multipart/form-data">
-	    <h1 style="font-size: 40px">Edit car</h1><br>
-		<div class="form-group">
-		  <label for="inputMake label-large">Make</label>
-		  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" autofocus>
-		</div>
-		<div class="form-group">
-		  <label for="inputModel">Model</label>
-		  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
-		</div>
-		<div class="form-group">
-		  	<div class="styled-select large">
-				<label for="inputYear">Year</label>
-				<select class="form-control input-lg" id="inputYear" required>
-				   	<option value="" disabled selected>Model year</option>
-				  	<option value="2015">2015</option>
-				   	<option value="2014">2014</option>
-				   	<option value="2013">2013</option>
-				   	<option value="2012">2012</option>
-				   	<option value="2011">2011</option>
-				   	<option value="2010">2010</option>
-				   	<option value="2009">2009</option>
-				   	<option value="2008">2008</option>
-				   	<option value="2007">2007</option>
-				   	<option value="2006">2006</option>
-				   	<option value="2005">2005</option>
-				   	<option value="1999">Older</option>
-				</select>
+	    <div class="jumbotron">
+
+		    <form onsubmit="return saveCar(event);" enctype="multipart/form-data">
+		    <h1 style="font-size: 40px">Edit car</h1><br>
+			<div class="form-group">
+			  <label for="inputMake">Make</label>
+			  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" autofocus>
 			</div>
-		</div>
-		<div class="form-group">
-		  <div class="form-group">
-			  <label for="inputPrice">Price</label>
-			  <div class="input-group">
-				  <span class="input-group-addon">£</span>
-				  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+			<div class="form-group">
+			  <label for="inputModel">Model</label>
+			  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
+			</div>
+			<div class="form-group">
+			  	<div class="styled-select large">
+					<label for="inputYear">Year</label>
+					<select class="form-control input-lg" id="inputYear" required>
+					   	<option value="" disabled selected>Model year</option>
+					  	<option value="2015">2015</option>
+					   	<option value="2014">2014</option>
+					   	<option value="2013">2013</option>
+					   	<option value="2012">2012</option>
+					   	<option value="2011">2011</option>
+					   	<option value="2010">2010</option>
+					   	<option value="2009">2009</option>
+					   	<option value="2008">2008</option>
+					   	<option value="2007">2007</option>
+					   	<option value="2006">2006</option>
+					   	<option value="2005">2005</option>
+					   	<option value="1999">Older</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+			  <div class="form-group">
+				  <label for="inputPrice">Price</label>
+				  <div class="input-group">
+					  <span class="input-group-addon">£</span>
+					  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+				  </div>
 			  </div>
-		  </div>
-		</div><br><br>
+			</div><br><br>
 
-		<div class="form-group">
-			<label for="inputMileage">Specs</label>
-			<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-	        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
-	        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
-				<div class="styled-select">			        
-					<select class="form-control" id="inputTransmission" style="border-radius: 0">
-				    	<option value="" disabled selected>Transmission type</option>
-				        <option value="Manual">Manual</option>
-				        <option value="Semi-Automatic">Semi-Automatic</option>
-				        <option value="Automatic">Automatic</option>
-				    </select>
-			    </div>
-			    <div class="styled-select">
-				    <select class="form-control" id="inputFuelType" style="border-radius: 0">
-				    	<option value="" disabled selected>Fuel type</option>
-				       	<option value="Petrol">Petrol</option>
-				       	<option value="Diesel">Diesel</option>
-				    </select>
-			    </div>
-			    <div class="styled-select">
-				    <select class="form-control" id="inputColor" style="border-radius: 0">
-				       	<option value="" disabled selected>Color</option>
-				       	<option value="Black">Black</option>
-				       	<option value="Silver">Silver</option>
-				       	<option value="White">White</option>
-				       	<option value="Eed">Red</option>
-				       	<option value="Green">Green</option>
-				       	<option value="Blue">Blue</option>
-				       	<option value="Yellow">Yellow</option>
-				       	<option value="Brown">Brown</option>
-				       	<option value="Other">Other</option>
-				    </select>
-			    </div>
-	        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
-        </div><br><br>
+			<div class="form-group">
+				<label for="inputMileage">Specs</label>
+				<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+		        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
+		        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
+					<div class="styled-select">			        
+						<select class="form-control" id="inputTransmission" style="border-radius: 0">
+					    	<option value="" disabled selected>Transmission type</option>
+					        <option value="Manual">Manual</option>
+					        <option value="Semi-Automatic">Semi-Automatic</option>
+					        <option value="Automatic">Automatic</option>
+					    </select>
+				    </div>
+				    <div class="styled-select">
+					    <select class="form-control" id="inputFuelType" style="border-radius: 0">
+					    	<option value="" disabled selected>Fuel type</option>
+					       	<option value="Petrol">Petrol</option>
+					       	<option value="Diesel">Diesel</option>
+					    </select>
+				    </div>
+				    <div class="styled-select">
+					    <select class="form-control" id="inputColor" style="border-radius: 0">
+					       	<option value="" disabled selected>Color</option>
+					       	<option value="Black">Black</option>
+					       	<option value="Silver">Silver</option>
+					       	<option value="White">White</option>
+					       	<option value="Eed">Red</option>
+					       	<option value="Green">Green</option>
+					       	<option value="Blue">Blue</option>
+					       	<option value="Yellow">Yellow</option>
+					       	<option value="Brown">Brown</option>
+					       	<option value="Other">Other</option>
+					    </select>
+				    </div>
+		        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+	        </div>
 
-		<div class="form-group">
-		  <label for="exampleInputFile">New cover image</label>
-		  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg">
-		  <p class="help-block">Leave empty if you don't want to change one.</p>
-		</div><br>
-		<div class="form-group">
-		  <label for="exampleInputFile">New gallery images</label>
-		  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
-		  <p class="help-block">Additional images to show in detail view.</p>
-		</div><br>
-		<button type="submit" class="btn btn-lg btn-success">Save</button>
+			<br><br>
+			<div class="form-group">
+				<label for="inputMileage">Features</label>
+				<div id="dynamicInput">
+				</div>
+				<input type="button" class="btn btn-default" style="padding: 1px 12px; font-size: 13px; line-height: 1.5; border-radius: 3px; border-top-left-radius: 0; border-top-right-radius: 0;" value="Add another feature" onClick="addInput('dynamicInput');">
+			</div>
+
+			  <br><br>
+			  <div class="form-group">
+			  <label for="exampleInputFile">New cover image</label>
+			  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg">
+			  <p class="help-block">Leave empty if you don't want to change one.</p>
+			</div><br>
+			<div class="form-group">
+			  <label for="exampleInputFile">New gallery images</label>
+			  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
+			  <p class="help-block">Additional images to show in detail view.</p>
+			</div><br>
+			<button type="submit" class="btn btn-lg btn-success">Save</button>
 	  </form>
-	</div><br><br><br>
 
-	<footer class="footer">
-      <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
-    </footer>
+		</div>
+
+		<br><br><br>
+
+		<footer class="footer">
+	      <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
+	    </footer>
     </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -227,6 +280,15 @@
 				    	carObject.set("location", location);
 				    }
 
+					var inputs = document.querySelectorAll("#foo input[name='bar[]']");
+						if (inputs != null) {
+						for (var i = 0; i < inputs.length; i++) {
+							carObject.unset("features");
+						   	if (inputs[i].value != "") {
+						   		carObject.addUnique("features", inputs[i].value);
+						   	}
+						}
+					}
 
 					var fileUploadControl = $("#coverImg")[0];
 				    if (fileUploadControl.files.length > 0) {
