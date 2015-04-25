@@ -117,7 +117,7 @@
 				<div class="form-group">
 					<label for="inputMileage">Features</label>
 			        <div id="dynamicInput">
-				        <input type="text" name="myInputs[]" class="form-control" placeholder="Feature #1" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" name="p_id[]">
+				        <input type="text" name="bar[]" class="form-control" placeholder="Feature #1" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" name="p_id[]">
 				    </div>
 				    <input type="button" class="btn btn-default" style="padding: 1px 12px; font-size: 13px; line-height: 1.5; border-radius: 3px; border-top-left-radius: 0; border-top-right-radius: 0;" value="Add another feature" onClick="addInput('dynamicInput');">
 				</div>
@@ -163,7 +163,7 @@
 		     else {
 		          var newdiv = document.createElement('div');
 		          newdiv.innerHTML = "<input type='text' class='form-control'  style='border-radius: 0' " + 
-		          					 			"name='myInputs[]' placeholder='Feature #" + (counter + 1) + "'' name='p_id[]'>";
+		          					 			"name='bar[]' placeholder='Feature #" + (counter + 1) + "'>";
 		          document.getElementById(divName).appendChild(newdiv);
 		          counter++;
 		     }
@@ -222,6 +222,13 @@
 		    if (location) {
 		    	carObject.set("location", location);
 		    }
+
+			var inputs = document.querySelectorAll("#foo input[name='bar[]']");
+			for (var i = 0; i < inputs.length; i++) {
+			   	if (inputs[i].value != "") {
+			   		carObject.addUnique("features", inputs[i].value);
+			   	}
+			}
 
 		    var fileUploadControl = $("#coverImg")[0];
 		    var file = fileUploadControl.files[0];
