@@ -78,11 +78,11 @@
 
 				<div class="form-group">
 					<label for="inputMileage">Specs</label>
-					<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-			        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0">
-			        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0">
+					<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
+			        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" required>
+			        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" required>
 			        <div class="styled-select">			        
-				        <select class="form-control" id="inputTransmission" style="border-radius: 0">
+				        <select class="form-control" id="inputTransmission" style="border-radius: 0" required>
 				        	<option value="" disabled selected>Transmission type</option>
 				        	<option value="Manual">Manual</option>
 				        	<option value="Semi-Automatic">Semi-Automatic</option>
@@ -90,14 +90,14 @@
 				        </select>
 			        </div>
 			        <div class="styled-select">
-				        <select class="form-control" id="inputFuelType" style="border-radius: 0">
+				        <select class="form-control" id="inputFuelType" style="border-radius: 0" required>
 				        	<option value="" disabled selected>Fuel type</option>
 				        	<option value="Petrol">Petrol</option>
 				        	<option value="Diesel">Diesel</option>
 				        </select>
 			        </div>
 			        <div class="styled-select">
-				        <select class="form-control" id="inputColor" style="border-radius: 0">
+				        <select class="form-control" id="inputColor" style="border-radius: 0" required>
 				        	<option value="" disabled selected>Color</option>
 				        	<option value="Black">Black</option>
 				        	<option value="Silver">Silver</option>
@@ -110,7 +110,7 @@
 				        	<option value="Other">Other</option>
 				        </select>
 			        </div>
-			        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+			        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;" required>
 		        </div>
 
 		        <br><br>
