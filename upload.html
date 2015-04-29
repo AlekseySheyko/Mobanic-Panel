@@ -70,7 +70,7 @@
 				  <label for="inputPrice">Price</label>
 				  <div class="input-group">
 					  <span class="input-group-addon">£</span>
-					  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+					  <input class="form-control input-lg" id="inputPrice" placeholder="Price" required>
 				  </div>
 				</div>
 
@@ -78,7 +78,7 @@
 
 				<div class="form-group">
 					<label for="inputMileage">Specs</label>
-					<input type="number" class="form-control" id="inputMileage" placeholder="Mileage, km" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
+					<input type="number" class="form-control" id="inputMileage" placeholder="Mileage" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
 			        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" required>
 			        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" required>
 			        <div class="styled-select">			        
@@ -147,11 +147,18 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="autoNumeric.js"></script>
 	<script type="text/javascript">
 		function logout() {
 			Parse.User.logOut();
 		    window.location.replace('index.html');
 		}
+
+		$( document ).ready( function() {
+	      $("#inputPrice").autoNumeric(
+	        'init', {aSep: ',', mDec: '0', vMax: '999999999'}
+	      );
+	    });
 
 		var counter = 1;
 		var limit = 10;
@@ -184,7 +191,7 @@
 			var make = document.getElementById("inputMake").value;
 			var model = document.getElementById("inputModel").value;
 			var year = parseInt(document.getElementById("inputYear").value);
-			var price = parseInt(document.getElementById("inputPrice").value);
+			var price = parseInt(document.getElementById("inputPrice").value.replace(/,/g, ''));
 			var mileage = parseInt(document.getElementById("inputMileage").value);
 			var previousOwners = parseInt(document.getElementById("inputPreviousOwners").value);
 			var engine = parseInt(document.getElementById("inputEngine").value);
@@ -247,23 +254,20 @@
 				var GalleryImage = Parse.Object.extend("GalleryImages");
 		    	var galleryImage = new GalleryImage();
 
-		    	var file = fileUploadControl.files[0];
+		    	var file = fileUploadControl.files[i];
 			    var name = "galleryImage" + (i+1) + ".png";
 
 			    parseFile = new Parse.File(name, file);
-			    parseFile.save();
 
 			    galleryImage.set("image", parseFile);
-			    galleryImage.save(null, {
-				  success: function(gameScore) {
-			    	relation.add(galleryImage);
+				galleryImage.save(null, {
+				  success: function(galleryImage) {
+				    relation.add(galleryImage);
 				  },
-				  error: function(gameScore, error) {
+				  error: function(galleryImage, error) {
 				  }
-				});
+				});				
 			}
-
-			sendPush();
 
 			carObject.save(null, {
 			  success: function(gameScore) {
@@ -274,6 +278,8 @@
 			    alert('Failed to upload the car, cause: ' + error.message);
 			  }
 			});
+
+			sendPush();
 
 		}
 	</script>
