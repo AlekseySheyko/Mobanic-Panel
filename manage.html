@@ -69,18 +69,22 @@
 				  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 				];
 
-		  		for (var i = 0; i < results.length; i++) {
-			      var object = results[i];
-			      var date = object.createdAt;
-			      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='edit.html?carId=" + object.id + "' title='Edit'>" + object.get('model') + "</td><td>" + date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>";
-			      if (object.get('isSold')) {
-			      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=false' title='Set visible'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>";
-			      } else {
-			      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=true' title='Mark as sold'><span class='glyphicon glyphicon-eye-open' style='margin-right: 8px; margin-left: 10px'></span></a>";
-			      }
-			      
-			      myTable+= "<a href='delete.html?carId=" + object.id + "' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
-			    }
+				if (results.length == 0) {
+					myTable+= "<td></td><td><p style='font-size: 30px; color: #929292; margin-left: -3px'>No cars yet</p></td></tr>";
+				} else {
+			  		for (var i = 0; i < results.length; i++) {
+				      var object = results[i];
+				      var date = object.createdAt;
+				      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='edit.html?carId=" + object.id + "' title='Edit'>" + object.get('model') + "</td><td>" + date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>";
+				      if (object.get('isSold')) {
+				      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=false' title='Set visible'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>";
+				      } else {
+				      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=true' title='Mark as sold'><span class='glyphicon glyphicon-eye-open' style='margin-right: 8px; margin-left: 10px'></span></a>";
+				      }
+				      
+				      myTable+= "<a href='delete.html?carId=" + object.id + "' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
+				    }
+				}
 			    myTable+= "</tbody></table>";
 			    document.getElementById('tablePrint').innerHTML = myTable;
         	},
