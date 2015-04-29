@@ -56,7 +56,11 @@
 		    document.getElementById("inputMake").value = carObject.get('make');
 		    document.getElementById("inputModel").value = carObject.get('model');
 		    document.getElementById("inputYear").value = carObject.get('year');
-		    document.getElementById("inputPrice").value = carObject.get('price');
+		    // document.getElementById("inputPrice").value = carObject.get('price');
+
+					$("#inputPrice").autoNumeric('set', carObject.get('price'));
+					// $("#inputPrice").autoNumeric('update', {aSep: ',', mDec: '0', vMax: '999999999'});
+
 		    document.getElementById("inputMileage").value = carObject.get('mileage');
 		    document.getElementById("inputPreviousOwners").value = carObject.get('previousOwners');
 		    var engine = carObject.get('engine');
@@ -141,7 +145,7 @@
 				  <label for="inputPrice">Price</label>
 				  <div class="input-group">
 					  <span class="input-group-addon">£</span>
-					  <input type="number" class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+					  <input class="form-control input-lg" id="inputPrice" placeholder="Price" required>
 				  </div>
 			  </div>
 			</div><br><br>
@@ -223,6 +227,7 @@
 		    window.location.replace('index.html');
 		}
 
+
 		$( document ).ready( function() {
 	      $("#inputPrice").autoNumeric(
 	        'init', {aSep: ',', mDec: '0', vMax: '999999999'}
@@ -265,6 +270,7 @@
 				    carObject.set("model", model);
 				    carObject.set("year", year);
 				    carObject.set("price", price);
+
 				    if (document.getElementById("inputMileage").value) {
 				    	carObject.set("mileage", mileage);
 				    }
