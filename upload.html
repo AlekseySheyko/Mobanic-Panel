@@ -255,11 +255,27 @@
 
 			fileUploadControl = $("#galleryImgs")[0];
 
-			if (fileUploadControl.files[0] != null) {
-				var GalleryImage = Parse.Object.extend("GalleryImages");
-			    var galleryImage = new GalleryImage();
+
+			var GalleryImage;
+			var galleryImage;
+
+			if (fileUploadControl.files.length > 0) {
+				GalleryImage = Parse.Object.extend("GalleryImages");
+			    galleryImage = new GalleryImage();
 
 			    file = fileUploadControl.files[0];
+			    if (file == null) {
+				    carObject.save(null, {
+					  success: function(carObject) {
+					    alert('Successfully uploaded');
+					    window.location.replace('manage.html');
+					  },
+					  error: function(carObject, error) {
+					    alert('Failed to upload the car, cause: ' + error.message);
+					  }
+					});
+			    	return;
+			    }
 				name = "galleryImage1.png";
 
 				parseFile = new Parse.File(name, file);
@@ -270,15 +286,116 @@
 				  	  success: function(galleryImage) {
 						    relation.add(galleryImage);
 
-						    carObject.save(null, {
-							  success: function(carObject) {
-							    alert('Successfully uploaded');
-							    window.location.replace('manage.html');
-							  },
-							  error: function(carObject, error) {
-							    alert('Failed to upload the car, cause: ' + error.message);
-							  }
-							});
+
+						    GalleryImage = Parse.Object.extend("GalleryImages");
+						    galleryImage = new GalleryImage();
+
+						    file = fileUploadControl.files[1];
+						    if (file == null) {
+							    carObject.save(null, {
+								  success: function(carObject) {
+								    alert('Successfully uploaded');
+								    window.location.replace('manage.html');
+								  },
+								  error: function(carObject, error) {
+								    alert('Failed to upload the car, cause: ' + error.message);
+								  }
+								});
+						    	return;
+						    }
+							name = "galleryImage2.png";
+
+							parseFile = new Parse.File(name, file);
+							parseFile.save().then(function() {
+							  // The file has been saved to Parse.
+							  galleryImage.set("image", parseFile);
+							  galleryImage.save(null, {
+							  	  success: function(galleryImage) {
+									    relation.add(galleryImage);
+
+
+
+									    GalleryImage = Parse.Object.extend("GalleryImages");
+									    galleryImage = new GalleryImage();
+
+									    file = fileUploadControl.files[2];
+									    if (file == null) {
+										    carObject.save(null, {
+											  success: function(carObject) {
+											    alert('Successfully uploaded');
+											    window.location.replace('manage.html');
+											  },
+											  error: function(carObject, error) {
+											    alert('Failed to upload the car, cause: ' + error.message);
+											  }
+											});
+									    	return;
+									    }
+										name = "galleryImage3.png";
+
+										parseFile = new Parse.File(name, file);
+										parseFile.save().then(function() {
+										  // The file has been saved to Parse.
+										  galleryImage.set("image", parseFile);
+										  galleryImage.save(null, {
+										  	  success: function(galleryImage) {
+												    relation.add(galleryImage);
+
+
+
+												    GalleryImage = Parse.Object.extend("GalleryImages");
+												    galleryImage = new GalleryImage();
+
+												    file = fileUploadControl.files[3];
+												    if (file == null) {
+													    carObject.save(null, {
+														  success: function(carObject) {
+														    alert('Successfully uploaded');
+														    window.location.replace('manage.html');
+														  },
+														  error: function(carObject, error) {
+														    alert('Failed to upload the car, cause: ' + error.message);
+														  }
+														});
+												    	return;
+												    }
+													name = "galleryImage4.png";
+
+													parseFile = new Parse.File(name, file);
+													parseFile.save().then(function() {
+													  // The file has been saved to Parse.
+													  galleryImage.set("image", parseFile);
+													  galleryImage.save(null, {
+													  	  success: function(galleryImage) {
+															    relation.add(galleryImage);
+
+
+
+
+
+
+
+
+															}
+														  });
+														}, function(error) {
+														  // The file either could not be read, or could not be saved to Parse.
+														});
+
+
+													}
+												  });
+												}, function(error) {
+												  // The file either could not be read, or could not be saved to Parse.
+												});
+
+
+										}
+									  });
+									}, function(error) {
+									  // The file either could not be read, or could not be saved to Parse.
+									});
+						    
 					  }
 				  });
 				}, function(error) {
@@ -286,17 +403,17 @@
 				});					  	
 				
 				
+			} else {
+				carObject.save(null, {
+				  success: function(carObject) {
+				    alert('Successfully uploaded');
+				    window.location.replace('manage.html');
+				  },
+				  error: function(carObject, error) {
+				    alert('Failed to upload the car, cause: ' + error.message);
+				  }
+				});
 			}
-
-				// carObject.save(null, {
-				//   success: function(carObject) {
-				//     alert('Successfully uploaded');
-				//     window.location.replace('manage.html');
-				//   },
-				//   error: function(carObject, error) {
-				//     alert('Failed to upload the car, cause: ' + error.message);
-				//   }
-				// });
 
 			sendPush();
 
