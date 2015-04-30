@@ -56,11 +56,7 @@
 		    document.getElementById("inputMake").value = carObject.get('make');
 		    document.getElementById("inputModel").value = carObject.get('model');
 		    document.getElementById("inputYear").value = carObject.get('year');
-		    // document.getElementById("inputPrice").value = carObject.get('price');
-
-					$("#inputPrice").autoNumeric('set', carObject.get('price'));
-					// $("#inputPrice").autoNumeric('update', {aSep: ',', mDec: '0', vMax: '999999999'});
-
+			$("#inputPrice").autoNumeric('set', carObject.get('price'));
 		    document.getElementById("inputMileage").value = carObject.get('mileage');
 		    document.getElementById("inputPreviousOwners").value = carObject.get('previousOwners');
 		    var engine = carObject.get('engine');
@@ -176,7 +172,7 @@
 					       	<option value="Black">Black</option>
 					       	<option value="Silver">Silver</option>
 					       	<option value="White">White</option>
-					       	<option value="Eed">Red</option>
+					       	<option value="Red">Red</option>
 					       	<option value="Green">Green</option>
 					       	<option value="Blue">Blue</option>
 					       	<option value="Yellow">Yellow</option>
@@ -334,7 +330,7 @@
 						var GalleryImage = Parse.Object.extend("GalleryImages");
 				    	var galleryImage = new GalleryImage();
 
-				    	var file = fileUploadControl.files[0];
+				    	var file = fileUploadControl.files[i];
 					    var name = "galleryImage" + (i+1) + ".png";
 
 					    parseFile = new Parse.File(name, file);
