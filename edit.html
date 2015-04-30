@@ -57,7 +57,7 @@
 		    document.getElementById("inputModel").value = carObject.get('model');
 		    document.getElementById("inputYear").value = carObject.get('year');
 			$("#inputPrice").autoNumeric('set', carObject.get('price'));
-		    document.getElementById("inputMileage").value = carObject.get('mileage');
+			$("#inputMileage").autoNumeric('set', carObject.get('mileage'));
 		    document.getElementById("inputPreviousOwners").value = carObject.get('previousOwners');
 		    var engine = carObject.get('engine');
 		    engine = engine.substring(0, engine.length - 2);
@@ -148,7 +148,7 @@
 
 			<div class="form-group">
 				<label for="inputMileage">Specs</label>
-				<input type="number" class="form-control" id="inputMileage" placeholder="Mileage" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
+				<input class="form-control" id="inputMileage" placeholder="Mileage" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
 		        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" required>
 		        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" required>
 					<div class="styled-select">			        
@@ -228,6 +228,9 @@
 	      $("#inputPrice").autoNumeric(
 	        'init', {aSep: ',', mDec: '0', vMax: '999999999'}
 	      );
+	      $("#inputMileage").autoNumeric(
+	        'init', {aSep: ',', mDec: '0', vMax: '9999999'}
+	      );
 	    });
 
 		function sendPush() {
@@ -254,7 +257,7 @@
 					var model = document.getElementById("inputModel").value;
 					var year = parseInt(document.getElementById("inputYear").value);
 					var price = parseInt(document.getElementById("inputPrice").value.replace(/,/g, ''));
-					var mileage = parseInt(document.getElementById("inputMileage").value);
+					var mileage = parseInt(document.getElementById("inputMileage").value.replace(/,/g, ''));
 					var previousOwners = parseInt(document.getElementById("inputPreviousOwners").value);
 					var engine = parseInt(document.getElementById("inputEngine").value);
 					var transmission = document.getElementById("inputTransmission").value;
