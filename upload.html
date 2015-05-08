@@ -271,7 +271,7 @@
 			    if (file == null) {
 				    carObject.save(null, {
 					  success: function(carObject) {
-					    alert('Successfully uploaded');
+						sendPush();	
 					    window.location.replace('manage.html');
 					  },
 					  error: function(carObject, error) {
@@ -298,6 +298,7 @@
 						    if (file == null) {
 							    carObject.save(null, {
 								  success: function(carObject) {
+									sendPush();
 								    alert('Successfully uploaded');
 								    window.location.replace('manage.html');
 								  },
@@ -326,6 +327,7 @@
 									    if (file == null) {
 										    carObject.save(null, {
 											  success: function(carObject) {
+												sendPush();
 											    alert('Successfully uploaded');
 											    window.location.replace('manage.html');
 											  },
@@ -354,6 +356,7 @@
 												    if (file == null) {
 													    carObject.save(null, {
 														  success: function(carObject) {
+															sendPush();
 														    alert('Successfully uploaded');
 														    window.location.replace('manage.html');
 														  },
@@ -382,6 +385,7 @@
 															    if (file == null) {
 																    carObject.save(null, {
 																	  success: function(carObject) {
+																		sendPush();
 																	    alert('Successfully uploaded');
 																	    window.location.replace('manage.html');
 																	  },
@@ -410,6 +414,7 @@
 																		    if (file == null) {
 																			    carObject.save(null, {
 																				  success: function(carObject) {
+																					sendPush();
 																				    alert('Successfully uploaded');
 																				    window.location.replace('manage.html');
 																				  },
@@ -432,6 +437,7 @@
 
 																				carObject.save(null, {
 																				  success: function(carObject) {
+																					sendPush();
 																				    alert('Successfully uploaded');
 																				    window.location.replace('manage.html');
 																				  },
@@ -486,8 +492,6 @@
 				}, function(error) {
 				  // The file either could not be read, or could not be saved to Parse.
 				});
-
-			sendPush();
 
 		}
 	</script>

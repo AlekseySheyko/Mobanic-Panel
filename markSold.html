@@ -41,14 +41,13 @@
 		  	carObject.set('isSold', JSON.parse(isSold));
 		  	carObject.save(null, {
 			  success: function(carObject) {
+			  	sendPush();
 			    window.location.replace('manage.html');
 			  },
 			  error: function(carObject, error) {
 			  	alert("Not saved. Cause: " + error.message);
 			  }
 			});
-
-		  	sendPush();
 		  },
 		  error: function(carObject, error) {
 		    alert("Car not found. Cause: " + error.message);
