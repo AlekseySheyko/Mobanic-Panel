@@ -31,12 +31,17 @@
 	            <a href="#" onclick="logout();return false;" class="pull-right" style="margin-left: 8px; margin-right: 0px; margin-top: 10px; color: #555;">Log out</a>
 	          </ul>
 	        </nav>
+<<<<<<< HEAD
 	        <a href="manage.html"><img src="img/header_logo.png"</img></a>
+=======
+	        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
+>>>>>>> FETCH_HEAD
     	</div>
 
 	    <div class="jumbotron">
 
 	    	<form id="foo" onsubmit="return saveCar(event);" enctype="multipart/form-data">
+<<<<<<< HEAD
 				<div class="row">
 				  <div class="col-md-9"><h1 style="font-size: 40px">Upload new car</h1></div>
 				  </div>
@@ -45,12 +50,114 @@
 				  <input type="text" class="input-lg" id="inputMake" style="margin-left: -15px; text-transform: uppercase" placeholder="Registration mark" required autofocus>
 				</div>
 				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+=======
+			    <h1 style="font-size: 40px">Upload new car</h1><br>
+				<div class="form-group">
+				  <label for="inputMake label-large">Make</label>
+				  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" required autofocus>
+				</div>
+				<div class="form-group">
+				  <label for="inputModel">Model</label>
+				  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
+				</div>
+				<div class="form-group">
+				<div class="styled-select large">
+				  <label for="inputYear">Year</label>
+				  <select class="form-control input-lg" id="inputYear" required>
+				        	<option value="" disabled selected>Model year</option>
+				        	<option value="2015">2015</option>
+				        	<option value="2014">2014</option>
+				        	<option value="2013">2013</option>
+				        	<option value="2012">2012</option>
+				        	<option value="2011">2011</option>
+				        	<option value="2010">2010</option>
+				        	<option value="2009">2009</option>
+				        	<option value="2008">2008</option>
+				        	<option value="2007">2007</option>
+				        	<option value="2006">2006</option>
+				        	<option value="2005">2005</option>
+				        	<option value="1999">Older</option>
+				  </select>
+				</div>
+				</div>
+				<div class="form-group">
+				  <label for="inputPrice">Price</label>
+				  <div class="input-group">
+					  <span class="input-group-addon">£</span>
+					  <input class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+				  </div>
+				</div>
+
+				<br><br>
+
+				<div class="form-group">
+					<label for="inputMileage">Specs</label>
+					<input class="form-control" id="inputMileage" placeholder="Mileage" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
+			        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" required>
+			        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" required>
+			        <div class="styled-select">			        
+				        <select class="form-control" id="inputTransmission" style="border-radius: 0" required>
+				        	<option value="" disabled selected>Transmission type</option>
+				        	<option value="Automatic">Automatic</option>
+				        	<option value="Semi-Automatic">Semi-Automatic</option>
+				        	<option value="Manual">Manual</option>
+				        </select>
+			        </div>
+			        <div class="styled-select">
+				        <select class="form-control" id="inputFuelType" style="border-radius: 0" required>
+				        	<option value="" disabled selected>Fuel type</option>
+				        	<option value="Diesel">Diesel</option>
+				        	<option value="Petrol">Petrol</option>
+				        </select>
+			        </div>
+			        <div class="styled-select">
+				        <select class="form-control" id="inputColor" style="border-radius: 0" required>
+				        	<option value="" disabled selected>Color</option>
+				        	<option value="Black">Black</option>
+				        	<option value="Silver">Silver</option>
+				        	<option value="White">White</option>
+				        	<option value="Red">Red</option>
+				        	<option value="Green">Green</option>
+				        	<option value="Blue">Blue</option>
+				        	<option value="Yellow">Yellow</option>
+				        	<option value="Brown">Brown</option>
+				        	<option value="Other">Other</option>
+				        </select>
+			        </div>
+			        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;" required>
+		        </div>
+
+		        <br><br>
+				<div class="form-group">
+					<label for="inputMileage">Features</label>
+			        <div id="dynamicInput">
+				        <input type="text" name="bar[]" class="form-control" placeholder="Feature #1" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" name="p_id[]">
+				    </div>
+				    <input type="button" class="btn btn-default" style="padding: 1px 12px; font-size: 13px; line-height: 1.5; border-radius: 3px; border-top-left-radius: 0; border-top-right-radius: 0;" value="Add another feature" onClick="addInput('dynamicInput');">
+				</div>
+
+		        <br><br>
+				<div class="form-group">
+				  <label for="exampleInputFile">Cover image</label>
+				  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg" required>
+				  <p class="help-block">Will be shown in main car listing.</p>
+				</div><br>
+				<div class="form-group">
+				  <label for="exampleInputFile">Gallery images</label>
+				  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
+				  <p class="help-block">Additional images to show in gallery.</p>
+				</div><br>
+>>>>>>> FETCH_HEAD
 				<button type="submit" class="btn btn-lg btn-success">Save</button>
 		  </form>
 
 		</div>
 
+<<<<<<< HEAD
 		<br><br>
+=======
+		<br><br><br>
+>>>>>>> FETCH_HEAD
 
 		<footer class="footer">
 	      <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
