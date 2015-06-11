@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+
+	<title>Mobanic - Portal</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  </head>
+
+  <body>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  	<script type="text/javascript">
+	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+
+	    function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
+	    var currentUser = Parse.User.current();
+		if (!currentUser) {
+		    window.location.replace('index.html');
+		}
+
+		var carId = getParameterByName('carId');
+		var isSold = getParameterByName('sold');
+
+		var CarObject = Parse.Object.extend("Car");
+		var query = new Parse.Query(CarObject);
+		query.get(carId, {
+		  success: function(carObject) {
+
+		  	carObject.set('isSold', JSON.parse(isSold));
+		  	carObject.save(null, {
+			  success: function(carObject) {
+			  	sendPush();
+			    window.location.replace('manage.html');
+			  },
+			  error: function(carObject, error) {
+			  	alert("Not saved. Cause: " + error.message);
+			  }
+			});
+		  },
+		  error: function(carObject, error) {
+		    alert("Car not found. Cause: " + error.message);
+		    window.location.replace('manage.html');
+		  }
+		});
+
+		function getParameterByName(name) {
+		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		        results = regex.exec(location.search);
+		    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+  	</script>
+
+  </body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+
+	<title>Mobanic - Edit</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript">
+	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+
+		var counter;
+		var limit = 10;
+
+	    var currentUser = Parse.User.current();
+		if (!currentUser) {
+		    window.location.replace('manage.html');
+		}
+
+		var carId = location.search.split('carId=')[1];
+
+		var CarObject = Parse.Object.extend("Car");
+		var query = new Parse.Query(CarObject);
+		query.get(carId, {
+		  success: function(carObject) {
+
+		  	var features = carObject.get('features');
+		  	if (features != null) {
+		  		counter = features.length;
+		  	} else {
+		  		counter = 0;		  		
+		  	}
+
+		  	if (counter == limit)  {
+		          alert("You have reached the limit of adding " + counter + " features");
+		     }
+		     else {
+		     	if (features != null && features.length > 0) {
+		     	  for (var i = 0; i < features.length; i++) {
+			          var newdiv = document.createElement('div');
+			          newdiv.innerHTML = "<input type='text' class='form-control'  style='border-radius: 0' " + "name='bar[]' placeholder='Feature #" + (i + 1) + "'" + " value='" + features[i] + "''>";
+			          document.getElementById("dynamicInput").appendChild(newdiv);
+		      	  }
+		      	} else {
+		      		counter = 1;
+		      		var newdiv = document.createElement('div');
+			          newdiv.innerHTML = "<input type='text' class='form-control' name='bar[]' placeholder='Feature #1' style='border-bottom-left-radius: 0; border-bottom-right-radius: 0;'>";
+			          document.getElementById("dynamicInput").appendChild(newdiv);
+		      	}
+		     }
+		    
+		    document.getElementById("inputMake").value = carObject.get('make');
+		    document.getElementById("inputModel").value = carObject.get('model');
+		    document.getElementById("inputYear").value = carObject.get('year');
+			$("#inputPrice").autoNumeric('set', carObject.get('price'));
+			$("#inputMileage").autoNumeric('set', carObject.get('mileage'));
+		    document.getElementById("inputPreviousOwners").value = carObject.get('previousOwners');
+		    var engine = carObject.get('engine');
+		    engine = engine.substring(0, engine.length - 2);
+		    document.getElementById("inputEngine").value = engine;
+		    document.getElementById("inputTransmission").value = carObject.get('transmission');
+		    document.getElementById("inputFuelType").value = carObject.get('fuelType');
+		    document.getElementById("inputColor").value = carObject.get('color');
+		    document.getElementById("inputLocation").value = carObject.get('location');
+
+		  },
+		  error: function(carObject, error) {
+		    alert("Car not found");
+		    window.location.replace('manage.html');
+		  }
+		});
+
+		function addInput(divName){
+
+		     if (counter == limit)  {
+		          alert("You have reached the limit of adding " + counter + " features");
+		     }
+		     else {
+		          var newdiv = document.createElement('div');
+		          newdiv.innerHTML = "<input type='text' class='form-control' style='border-radius: 0' name='bar[]' placeholder='Feature #" + (counter + 1) + "'>";
+		          document.getElementById(divName).appendChild(newdiv);
+		          counter++;
+		     }
+		}
+
+  	</script>
+  </head>
+
+  <body>
+  	<div class="container">
+
+  		<div class="header clearfix">
+	        <nav>
+	          <ul class="nav nav-pills pull-right">
+	            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
+	            <li role="presentation"><a href="http://mobanic.com">Home</a></li>	            
+	            <a href="#" onclick="logout();return false;" class="pull-right" style="margin-left: 8px; margin-right: 0px; margin-top: 10px; color: #555;">Log out</a>
+	          </ul>
+	        </nav>
+	        <a href="manage.html"><img src="img/header_logo.png"></img></a>
+    	</div>
+
+	    <div class="jumbotron">
+
+		    <form id="foo" onsubmit="return saveCar(event);" enctype="multipart/form-data">
+		    <h1 style="font-size: 40px">Edit car</h1><br>
+			<div class="form-group">
+			  <label for="inputMake">Make</label>
+			  <input type="text" class="form-control input-lg" id="inputMake" placeholder="Car make" autofocus>
+			</div>
+			<div class="form-group">
+			  <label for="inputModel">Model</label>
+			  <input type="text" class="form-control input-lg" id="inputModel" placeholder="Car model" required>
+			</div>
+			<div class="form-group">
+			  	<div class="styled-select large">
+					<label for="inputYear">Year</label>
+					<select class="form-control input-lg" id="inputYear" required>
+					   	<option value="" disabled selected>Model year</option>
+					  	<option value="2015">2015</option>
+					   	<option value="2014">2014</option>
+					   	<option value="2013">2013</option>
+					   	<option value="2012">2012</option>
+					   	<option value="2011">2011</option>
+					   	<option value="2010">2010</option>
+					   	<option value="2009">2009</option>
+					   	<option value="2008">2008</option>
+					   	<option value="2007">2007</option>
+					   	<option value="2006">2006</option>
+					   	<option value="2005">2005</option>
+					   	<option value="1999">Older</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+			  <div class="form-group">
+				  <label for="inputPrice">Price</label>
+				  <div class="input-group">
+					  <span class="input-group-addon">£</span>
+					  <input class="form-control input-lg" id="inputPrice" placeholder="Price" required>
+				  </div>
+			  </div>
+			</div><br><br>
+
+			<div class="form-group">
+				<label for="inputMileage">Specs</label>
+				<input class="form-control" id="inputMileage" placeholder="Mileage" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" required>
+		        <input type="number" class="form-control" id="inputPreviousOwners" placeholder="Previous owners" style="border-radius: 0" required>
+		        <input type="number" class="form-control" id="inputEngine" placeholder="Engine, cc" style="border-radius: 0" required>
+					<div class="styled-select">			        
+						<select class="form-control" id="inputTransmission" style="border-radius: 0" required>
+					    	<option value="" disabled selected>Transmission type</option>
+					        <option value="Automatic">Automatic</option>
+					        <option value="Semi-Automatic">Semi-Automatic</option>
+					        <option value="Manual">Manual</option>
+					    </select>
+				    </div>
+				    <div class="styled-select">
+					    <select class="form-control" id="inputFuelType" style="border-radius: 0" required>
+					    	<option value="" disabled selected>Fuel type</option>
+					       	<option value="Diesel">Diesel</option>
+					       	<option value="Petrol">Petrol</option>
+					    </select>
+				    </div>
+				    <div class="styled-select">
+					    <select class="form-control" id="inputColor" style="border-radius: 0" required>
+					       	<option value="" disabled selected>Color</option>
+					       	<option value="Black">Black</option>
+					       	<option value="Silver">Silver</option>
+					       	<option value="White">White</option>
+					       	<option value="Red">Red</option>
+					       	<option value="Green">Green</option>
+					       	<option value="Blue">Blue</option>
+					       	<option value="Yellow">Yellow</option>
+					       	<option value="Brown">Brown</option>
+					       	<option value="Other">Other</option>
+					    </select>
+				    </div>
+		        <input class="form-control" id="inputLocation" placeholder="Location (country code)" style="border-top-left-radius: 0; border-top-right-radius: 0;" required>
+	        </div>
+
+			<br><br>
+			<div class="form-group">
+				<label for="inputMileage">Features</label>
+				<div id="dynamicInput">
+				</div>
+				<input type="button" class="btn btn-default" style="padding: 1px 12px; font-size: 13px; line-height: 1.5; border-radius: 3px; border-top-left-radius: 0; border-top-right-radius: 0;" value="Add another feature" onClick="addInput('dynamicInput');">
+			</div>
+
+			  <br><br>
+			  <div class="form-group">
+			  <label for="exampleInputFile">New cover image</label>
+			  <input type="file" id="coverImg" accept="image/x-png, image/gif, image/jpeg">
+			  <p class="help-block">Leave empty if you don't want to change current image.</p>
+			</div><br>
+			<div class="form-group">
+			  <label for="exampleInputFile">New gallery images</label>
+			  <input type="file" id="galleryImgs" accept="image/x-png, image/gif, image/jpeg" multiple>
+			  <p class="help-block">Additional images to show in gallery.</p>
+			</div><br>
+			<button type="submit" class="btn btn-lg btn-success">Save</button>
+	  </form>
+
+		</div>
+
+		<br><br><br>
+
+		<footer class="footer">
+	      <p class="text-center">Copyright © 2015 Mobanic Ltd</p>
+	    </footer>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="autoNumeric.js"></script>
+	<script type="text/javascript">
+		function logout() {
+			Parse.User.logOut();
+		    window.location.replace('index.html');
+		}
+
+
+		$( document ).ready( function() {
+	      $("#inputPrice").autoNumeric(
+	        'init', {aSep: ',', mDec: '0', vMax: '999999999'}
+	      );
+	      $("#inputMileage").autoNumeric(
+	        'init', {aSep: ',', mDec: '0', vMax: '9999999'}
+	      );
+	    });
+
+		function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
+	 	function saveCar(event) {
+			event.preventDefault();
+
+
+			var carId = location.search.split('carId=')[1];
+
+			var CarObject = Parse.Object.extend("Car");
+			var query = new Parse.Query(CarObject);
+			query.get(carId, {
+			  success: function(carObject) {
+
+					var make = document.getElementById("inputMake").value;
+					var model = document.getElementById("inputModel").value;
+					var year = parseInt(document.getElementById("inputYear").value);
+					var price = parseInt(document.getElementById("inputPrice").value.replace(/,/g, ''));
+					var mileage = parseInt(document.getElementById("inputMileage").value.replace(/,/g, ''));
+					var previousOwners = parseInt(document.getElementById("inputPreviousOwners").value);
+					var engine = parseInt(document.getElementById("inputEngine").value);
+					var transmission = document.getElementById("inputTransmission").value;
+					var fuelType = document.getElementById("inputFuelType").value;
+					var color = document.getElementById("inputColor").value;
+					var location = document.getElementById("inputLocation").value;
+
+				    carObject.set("make", make);
+				    carObject.set("model", model);
+				    carObject.set("year", year);
+				    carObject.set("price", price);
+
+				    if (document.getElementById("inputMileage").value) {
+				    	carObject.set("mileage", mileage);
+				    }
+				    if (document.getElementById("inputPreviousOwners").value) {
+				    	carObject.set("previousOwners", previousOwners);
+				    }
+				    if (document.getElementById("inputEngine").value) {
+				    	carObject.set("engine", engine + "cc");
+				    }
+				    if (transmission) {
+				    	carObject.set("transmission", transmission);
+				    }
+				    if (fuelType) {
+				    	carObject.set("fuelType", fuelType);
+				    }
+				    if (color) {
+				    	carObject.set("color", color);
+				    }
+				    if (location) {
+				    	carObject.set("location", location);
+				    }
+
+					var inputs = document.querySelectorAll("#foo input[name='bar[]']");
+						if (inputs != null) {
+							for (var i = 0; i < inputs.length; i++) {
+							carObject.unset("features");
+						   	if (inputs[i].value != "") {
+						   		carObject.addUnique("features", inputs[i].value);
+						   	}
+						}
+					}
+
+				    var features = [];
+					var inputs = document.querySelectorAll("#foo input[name='bar[]']");
+					if (inputs != null) {
+						for (var i = 0; i < inputs.length; i++) {
+						   	if (inputs[i].value != "") {
+						   		features.push(inputs[i].value);
+						   	}
+						}
+						if (inputs[0].value != "") {
+						carObject.set("features", features);
+						}
+					}
+
+					var fileUploadControl = $("#coverImg")[0];
+						var file = fileUploadControl.files[0];
+						if (file != null) {
+						var name = "coverImage.png";
+
+						var parseFile = new Parse.File(name, file);
+
+						parseFile.save();
+					    carObject.set("coverImage", parseFile);
+					}
+
+
+					
+						    
+
+					fileUploadControl = $("#galleryImgs")[0];
+					if (fileUploadControl.files.length > 5) {
+						alert("You can upload a maximum of 5 images");
+						return;
+					}
+
+				  	var relation = carObject.relation("galleryImage");
+					var query = relation.query();
+					query.find({success: function (returnedTopics) {
+						    for (var i = 0; i < returnedTopics.length; i++) {
+						    	returnedTopics[i].destroy();
+						    }
+					    },
+					    error: function (error) {
+					    }
+					});
+
+
+						var GalleryImage;
+						var galleryImage;
+
+							
+							GalleryImage = Parse.Object.extend("GalleryImages");
+						    galleryImage = new GalleryImage();
+
+						    file = fileUploadControl.files[0];
+						    if (file == null) {
+							    carObject.save(null, {
+								  success: function(carObject) {
+								  	sendPush();
+								    alert('Successfully uploaded');
+								    window.location.replace('manage.html');
+								  },
+								  error: function(carObject, error) {
+								    alert('Failed to upload the car, cause: ' + error.message);
+								  }
+								});
+						    	return;
+						    }
+							name = "galleryImage1.png";
+
+							parseFile = new Parse.File(name, file);
+							parseFile.save().then(function() {
+							  // The file has been saved to Parse.
+							  galleryImage.set("image", parseFile);
+							  galleryImage.save(null, {
+							  	  success: function(galleryImage) {
+									    relation.add(galleryImage);
+
+
+									    GalleryImage = Parse.Object.extend("GalleryImages");
+									    galleryImage = new GalleryImage();
+
+									    file = fileUploadControl.files[1];
+									    if (file == null) {
+										    carObject.save(null, {
+											  success: function(carObject) {
+								  				sendPush();
+											    alert('Successfully uploaded');
+											    window.location.replace('manage.html');
+											  },
+											  error: function(carObject, error) {
+											    alert('Failed to upload the car, cause: ' + error.message);
+											  }
+											});
+									    	return;
+									    }
+										name = "galleryImage2.png";
+
+										parseFile = new Parse.File(name, file);
+										parseFile.save().then(function() {
+										  // The file has been saved to Parse.
+										  galleryImage.set("image", parseFile);
+										  galleryImage.save(null, {
+										  	  success: function(galleryImage) {
+												    relation.add(galleryImage);
+
+
+
+												    GalleryImage = Parse.Object.extend("GalleryImages");
+												    galleryImage = new GalleryImage();
+
+												    file = fileUploadControl.files[2];
+												    if (file == null) {
+													    carObject.save(null, {
+														  success: function(carObject) {														  	
+								  							sendPush();
+														    alert('Successfully uploaded');
+														    window.location.replace('manage.html');
+														  },
+														  error: function(carObject, error) {
+														    alert('Failed to upload the car, cause: ' + error.message);
+														  }
+														});
+												    	return;
+												    }
+													name = "galleryImage3.png";
+
+													parseFile = new Parse.File(name, file);
+													parseFile.save().then(function() {
+													  // The file has been saved to Parse.
+													  galleryImage.set("image", parseFile);
+													  galleryImage.save(null, {
+													  	  success: function(galleryImage) {
+															    relation.add(galleryImage);
+
+
+
+															    GalleryImage = Parse.Object.extend("GalleryImages");
+															    galleryImage = new GalleryImage();
+
+															    file = fileUploadControl.files[3];
+															    if (file == null) {
+																    carObject.save(null, {
+																	  success: function(carObject) {
+								  										sendPush();
+																	    alert('Successfully uploaded');
+																	    window.location.replace('manage.html');
+																	  },
+																	  error: function(carObject, error) {
+																	    alert('Failed to upload the car, cause: ' + error.message);
+																	  }
+																	});
+															    	return;
+															    }
+																name = "galleryImage4.png";
+
+																parseFile = new Parse.File(name, file);
+																parseFile.save().then(function() {
+																  // The file has been saved to Parse.
+																  galleryImage.set("image", parseFile);
+																  galleryImage.save(null, {
+																  	  success: function(galleryImage) {
+																		    relation.add(galleryImage);
+
+
+
+																		    GalleryImage = Parse.Object.extend("GalleryImages");
+																		    galleryImage = new GalleryImage();
+
+																		    file = fileUploadControl.files[4];
+																		    if (file == null) {
+																			    carObject.save(null, {
+																				  success: function(carObject) {
+								  													sendPush();
+																				    alert('Successfully uploaded');
+																				    window.location.replace('manage.html');
+																				  },
+																				  error: function(carObject, error) {
+																				    alert('Failed to upload the car, cause: ' + error.message);
+																				  }
+																				});
+																		    	return;
+																		    }
+																			name = "galleryImage5.png";
+
+																			parseFile = new Parse.File(name, file);
+																			parseFile.save().then(function() {
+																			  // The file has been saved to Parse.
+																			  galleryImage.set("image", parseFile);
+																			  galleryImage.save(null, {
+																			  	  success: function(galleryImage) {
+																					    relation.add(galleryImage);
+
+
+
+																					    GalleryImage = Parse.Object.extend("GalleryImages");
+																					    galleryImage = new GalleryImage();
+
+																					    file = fileUploadControl.files[5];
+																					    if (file == null) {
+																						    carObject.save(null, {
+																							  success: function(carObject) {
+								  																sendPush();
+																							    alert('Successfully uploaded');
+																							    window.location.replace('manage.html');
+																							  },
+																							  error: function(carObject, error) {
+																							    alert('Failed to upload the car, cause: ' + error.message);
+																							  }
+																							});
+																					    	return;
+																					    }
+																						name = "galleryImage6.png";
+
+																						parseFile = new Parse.File(name, file);
+																						parseFile.save().then(function() {
+																						  // The file has been saved to Parse.
+																						  galleryImage.set("image", parseFile);
+																						  galleryImage.save(null, {
+																						  	  success: function(galleryImage) {
+																								    relation.add(galleryImage);
+
+
+																							carObject.save(null, {
+																							  success: function(carObject) {
+								  																sendPush();
+																							    alert('Successfully uploaded');
+																							    window.location.replace('manage.html');
+																							  },
+																							  error: function(carObject, error) {
+																							    alert('Failed to upload the car, cause: ' + error.message);
+																							  }
+																							});
+																					    	return;
+
+
+
+
+
+																								}
+																							  });
+																							}, function(error) {
+																							  // The file either could not be read, or could not be saved to Parse.
+																							});
+
+
+
+																					}
+																				  });
+																				}, function(error) {
+																				  // The file either could not be read, or could not be saved to Parse.
+																				});
+
+
+
+																		}
+																	  });
+																	}, function(error) {
+																	  // The file either could not be read, or could not be saved to Parse.
+																	});
+
+
+																}
+															  });
+															}, function(error) {
+															  // The file either could not be read, or could not be saved to Parse.
+															});
+
+
+													}
+												  });
+												}, function(error) {
+												  // The file either could not be read, or could not be saved to Parse.
+												});
+									    
+								  }
+							  });
+							}, function(error) {
+							  // The file either could not be read, or could not be saved to Parse.
+							});
+
+						sendPush();
+
+
+
+					
+
+
+					},
+				  error: function(carObject, error) {
+				    alert("Car not found");
+				    window.location.replace('manage.html');
+				  }
+				});
+				event.preventDefault();
+			}
+	</script>
+  </body>
+</html>

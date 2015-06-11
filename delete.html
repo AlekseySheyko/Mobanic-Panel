@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+
+	<title>Mobanic - Portal</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  </head>
+
+  <body>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  	<script type="text/javascript">
+	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+
+	    function sendPush() {
+			Parse.Push.send({
+						  where: new Parse.Query(Parse.Installation),
+						  data: {
+				          	alert: "Update car listing"
+				          }
+						});
+		}
+
+	    var currentUser = Parse.User.current();
+		if (!currentUser) {
+		    window.location.replace('index.html');
+		}
+
+		var carId = location.search.split('carId=')[1];
+
+		var CarObject = Parse.Object.extend("Car");
+		var query = new Parse.Query(CarObject);
+		query.get(carId, {
+		  success: function(carObject, event) {
+
+		  	if (confirm('Are you sure you want to delete this car?')) {
+			    carObject.destroy({
+				  success: function(carObject) {
+					sendPush();
+				  	window.location.replace('manage.html');
+				  },
+				  error: function(carObject, error) {
+				    alert("The delete failed. Cause: " + error.message);
+				    window.location.replace('manage.html');
+				  }
+				});
+			}			
+		  },
+		  error: function(carObject, error) {
+		    alert("Car not found");
+		    window.location.replace('manage.html');
+		  }
+		});
+
+  	</script>
+
+  </body>
+</html>

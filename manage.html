@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<meta charset="utf-8">
+
+	<title>Mobanic - Portal</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+  	<script type="text/javascript">
+	    Parse.initialize("asQfJUeEXdJnbfvG2iefkvjhVpcmIq2GnOp5x5P2", "nekbtqyfm8m3K6DRekriIij1U3fnxPLGiAq01Nf7");
+
+	    var currentUser = Parse.User.current();
+		if (!currentUser) {
+		    window.location.replace('index.html');
+		}
+
+  	</script>
+  </head>
+
+  <body>
+
+  	<div class="container">
+
+  		<div class="header clearfix" style="border-bottom: 0px">
+	        <nav>
+	          <ul class="nav nav-pills pull-right" style="margin-right: 7px">
+	            <li role="presentation" style="margin-right: 4px"><a href="http://mobanic.com">Home</a></li>
+	            <li role="presentation" class="active"><a href="index.html">Portal</a></li>
+	            <a href="#" onclick="logout();return false;" class="pull-right" style="margin-left: 8px; margin-right: 0px; margin-top: 11px; color: #555; font-family: monospace">Log out</a>
+	          </ul>
+	        </nav>
+	        <a href="http://mobanic.com"><img src="img/header_logo.png"</img></a>
+    	</div>
+
+	    <div class="jumbotron">
+	    	<div class="row">
+			  <div class="col-md-8"><h1 style="font-size: 40px">Manage car listing</h1></div>
+			  <div class="col-md-4"><a class="btn btn-success" href="upload.html" role="button" style="margin-top: 10px; margin-left: 8px">Upload new</a></div>
+			</div>
+			<br><br>
+	    	<div class="table-responsive" id="tablePrint" style="margin-right: 5px"></div>			
+	    </div><br>
+
+    	<footer class="footer" style="border-top: 0px; margin-top: -60px; margin-right: 14px">
+        	<p class="text-right" style="color: #363535">Copyright © 2015 Mobanic Ltd</p>
+      	</footer>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function logout() {
+			Parse.User.logOut();
+		    window.location.replace('index.html');
+		}
+
+		var CarObject = Parse.Object.extend("Car");
+		var query = new Parse.Query(CarObject);
+		query.descending("createdAt");
+		query.find({
+		  success: function(results) {
+		  		var myTable= "<table class=\"table table-hover\"><thead><tr><th>#</th><th>Model</th><th>Date</th><th>Actions</th></tr></thead><tbody>";
+
+		  		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+				  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+				];
+
+				if (results.length == 0) {
+					myTable+= "<td></td><td><p style='font-size: 30px; color: #929292; margin-left: -3px'>No cars yet</p></td></tr>";
+				} else {
+			  		for (var i = 0; i < results.length; i++) {
+				      var object = results[i];
+				      var date = object.createdAt;
+				      myTable+= "<tr><td>" + (i+1) + "</td><td><a href='edit.html?carId=" + object.id + "' title='Edit'>" + object.get('model') + "</td><td>" + date.getDate() + " " + monthNames[date.getMonth()] + "</td><td>";
+				      if (object.get('isSold')) {
+				      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=false' title='Set visible'><span class='glyphicon glyphicon-eye-close' style='margin-right: 8px; margin-left: 10px'></span></a>";
+				      } else {
+				      	myTable+= "<a href='markSold.html?carId=" + object.id + "&sold=true' title='Mark as sold'><span class='glyphicon glyphicon-eye-open' style='margin-right: 8px; margin-left: 10px'></span></a>";
+				      }
+				      
+				      myTable+= "<a href='delete.html?carId=" + object.id + "' title='Delete'><span class='glyphicon glyphicon-remove'></span></a>" + "</a></td></tr>";
+				    }
+				}
+			    myTable+= "</tbody></table>";
+			    document.getElementById('tablePrint').innerHTML = myTable;
+        	},
+		  error: function(error) {
+			Parse.User.logOut();
+		    window.location.replace('index.html');
+		  }
+		});
+	</script>
+  </body>
+</html>
